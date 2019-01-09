@@ -4,6 +4,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +21,10 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+    @Size(min = 3, max = 9, message = "hello {foo.message}")
     String name;
     String email;
+    String avatar;
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,

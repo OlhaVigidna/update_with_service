@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
+<span th:replace="fragments::header(${xxx})"></span>
 <body>
 <h1>main page</h1>
 
-<form th:action="@{/saveContact}" method="post">
+<!--<form th:action="@{/saveContact}" method="post">-->
+    <!--<input type="" name="name" placeholder="name">-->
+    <!--<input type="" name="email" placeholder="email">-->
+    <!--<input type="" name="phoneList" placeholder="phoneList">-->
+    <!--<input type="submit">-->
+<!--</form>-->
 
-    <input type="" name="name" placeholder="name">
-    <input type="" name="email" placeholder="email">
-    <input type="" name="phoneList" placeholder="phoneList">
+
+<form th:action="@{/saveContact}" method="post" th:object="${contact}" enctype="multipart/form-data">
+    <input type="text" th:field="*{name}" placeholder="name">
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</p>
+    <input type="email" th:field="*{email}" placeholder="email">
+    <input type="text" th:field="*{phoneList}" placeholder="phoneList">
+    <input type="file" name="picture">
     <input type="submit">
 </form>
+
+<ul>
+    <li th:each="contact : ${contacts}">
+        <a th:href="@{'details-' + ${contact.id}}" th:text="'deteil of contacts ' + ${contact.id}"></a>
+    </li>
+</ul>
 </body>
 </html>

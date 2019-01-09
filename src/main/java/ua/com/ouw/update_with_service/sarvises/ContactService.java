@@ -3,6 +3,7 @@ package ua.com.ouw.update_with_service.sarvises;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ua.com.ouw.update_with_service.dao.ContactDAO;
 import ua.com.ouw.update_with_service.models.Contact;
 
@@ -36,6 +37,10 @@ public class ContactService {
 
     public Contact getOne(int id) {
         return contactDAO.getOne(id);
+    }
+
+    public void transferFile(MultipartFile file) {
+//        file.transferTo();
     }
 
 }

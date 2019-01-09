@@ -21,7 +21,7 @@ public class Phone {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Contact contact;
 
-    public Phone(String number) {
-        this.number = number;
-    }
+//    public Phone(String number) {
+//        this.number = number;
+//    }
 }
