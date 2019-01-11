@@ -7,6 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.com.ouw.update_with_service.dao.ContactDAO;
 import ua.com.ouw.update_with_service.models.Contact;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -40,7 +42,13 @@ public class ContactService {
     }
 
     public void transferFile(MultipartFile file) {
-//        file.transferTo();
+
+        String pathToFolder = System.getProperty("user.home")+ File.separator + "images" + File.separator;
+        try {
+            file.transferTo(new File(pathToFolder + file.getOriginalFilename()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

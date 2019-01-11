@@ -35,11 +35,13 @@ public class HomeController {
     @PostMapping("/saveContact")
     public String saveContact(@Valid Contact contact, BindingResult bindingResult,
                               @RequestParam("picture") MultipartFile file
-                              ) {
-        if (bindingResult.hasErrors()){
+    ) {
+        if (bindingResult.hasErrors()) {
             return "home";
         }
+        contactService.transferFile(file);
         System.out.println(contact.getPhoneList());
+        contact.setAvatar(file.getOriginalFilename());
         contactService.save(contact);
 
         return "redirect:/";
@@ -66,5 +68,10 @@ public class HomeController {
     public void initBainder(WebDataBinder binder) {
         System.out.println("!!!!!!!!!!!!!!!!!!!");
         binder.registerCustomEditor(Phone.class, phoneDoctor);
+    }
+
+    @GetMapping("/about")
+    public String about() {
+        return "about";
     }
 }

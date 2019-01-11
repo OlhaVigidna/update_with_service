@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <span th:replace="fragments::header(${xxx})"></span>
 <body>
-<h1>main page</h1>
+
+<h1 th:text="#{asdqwe}"></h1>
 
 <!--<form th:action="@{/saveContact}" method="post">-->
     <!--<input type="" name="name" placeholder="name">-->
@@ -23,6 +24,9 @@
 
 <ul>
     <li th:each="contact : ${contacts}">
+        <div>
+            <img th:src="@{'/ava/'+${contact.avatar}}">
+        </div>
         <a th:href="@{'details-' + ${contact.id}}" th:text="'deteil of contacts ' + ${contact.id}"></a>
     </li>
 </ul>
