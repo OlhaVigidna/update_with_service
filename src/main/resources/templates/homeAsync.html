@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>homeAsync</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+homeAsync
+<div class="insert">
+    <input id="name">
+    <input id="email">
+    <button id="btn">save</button>
+</div>
+
+<div class="target"></div>
+
+<script>
+    $('#btn').click(function () {
+        var $name = $('#name').val();
+        var $email = $('#email').val();
+        console.log($name, $email);
+
+        $('.target').empty();
+
+        let contact = {name: $name, email: $email};
+
+        $.ajax({
+            // url: `saveAsync?name = ${$name}& email=${$email}`,
+            url: '/saveAsync',
+            type: 'POST',
+            data: JSON.stringify(contact),
+            contentType: 'application/json',
+            success: function (results) {
+                console.log(results);
+                for (const contact of results) {
+                    let data = `${contact.id} ${contact.name} ${contact.email}`;
+                    let $div = $('<div/>', {class: 'xxx', text: data});
+                    $('.target').append($div);
+                        }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>
