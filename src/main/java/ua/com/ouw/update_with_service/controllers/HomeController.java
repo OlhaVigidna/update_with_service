@@ -2,6 +2,7 @@ package ua.com.ouw.update_with_service.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,9 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.com.ouw.update_with_service.models.Contact;
 import ua.com.ouw.update_with_service.models.Phone;
 import ua.com.ouw.update_with_service.sarvises.ContactService;
+import ua.com.ouw.update_with_service.sarvises.EmailService;
 import ua.com.ouw.update_with_service.sarvises.PhoneService;
 import ua.com.ouw.update_with_service.sarvises.editirs.PhoneEditor;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Controller
@@ -28,7 +31,7 @@ public class HomeController {
         model.addAttribute("contacts", contactService.findAll());
         model.addAttribute("contact", new Contact("test", "test@test.com"));
         model.addAttribute("xxx", "hello page");
-        return "home";
+        return "homeAsyncImage";
     }
 
 
@@ -45,6 +48,24 @@ public class HomeController {
         contactService.save(contact);
 
         return "redirect:/";
+    }
+
+    @Autowired
+    private EmailService emailService;
+    
+    @PostMapping("/upload")
+    public @ResponseBody String uploadAjax(
+            @RequestParam String name,
+            @RequestParam String email,
+            @RequestParam MultipartFile image
+    ) throws MessagingException {
+        Contact contact = new Contact(name, email);
+        contact.setAvatar(image.getOriginalFilename());
+        contactService.transferFile(image);
+        contactService.save(contact);
+
+        emailService.sendEmail(email, image);
+        return "ok";
     }
 
     @GetMapping("/details-{xxx}")
@@ -74,4 +95,9 @@ public class HomeController {
     public String about() {
         return "about";
     }
+
+//    @GetMapping("/saveAsync")
+//    public void saveAsync() {
+//        System.out.println("react");
+//    }
 }
