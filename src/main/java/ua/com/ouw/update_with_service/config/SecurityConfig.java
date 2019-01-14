@@ -22,16 +22,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
          protected void configure(HttpSecurity http) throws Exception {
              http
                      .authorizeRequests()
-                     .antMatchers( "/home", "/login").permitAll()
+                     .antMatchers( "/home").permitAll()
                      .anyRequest().authenticated()
                      .antMatchers("/admin/**").hasRole("ADMIN")
                      .antMatchers(HttpMethod.POST, "/upload").hasRole("ADMIN")
                      .and()
                      .formLogin()
-//                     .loginPage("/login")
-//                     .successForwardUrl("/successURL")//handle with post mapping in controller
-//                     .failureUrl("/login?error").permitAll()
-//                     .permitAll()
+                     .loginPage("/login").permitAll()
+                     .loginProcessingUrl("/logMe")
+                     .successForwardUrl("/successURL")//handle with post mapping in controller
+                     .failureUrl("/login?error").permitAll()
+                     .permitAll()
                      .and()
                      .logout()
                      .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).

@@ -2,7 +2,9 @@ package ua.com.ouw.update_with_service.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import ua.com.ouw.update_with_service.sarvises.editirs.PhoneEditor;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @AllArgsConstructor
@@ -27,11 +30,20 @@ public class HomeController {
 
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model,
+                       @AuthenticationPrincipal Authentication authentication,
+                       @AuthenticationPrincipal Principal principal,
+                       @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("contacts", contactService.findAll());
         model.addAttribute("contact", new Contact("test", "test@test.com"));
         model.addAttribute("xxx", "hello page");
-        return "homeAsyncImage";
+//        return "homeAsyncImage";
+        return "home";
+    }
+
+    @PostMapping("/successURL")
+    public String successURL(){
+        return "home";
     }
 
 
@@ -96,8 +108,6 @@ public class HomeController {
         return "about";
     }
 
-//    @GetMapping("/saveAsync")
-//    public void saveAsync() {
-//        System.out.println("react");
-//    }
+
+
 }

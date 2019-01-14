@@ -5,30 +5,35 @@
 
 <h1 th:text="#{asdqwe}"></h1>
 
+<form th:action="@{/saveUser}" method="post">
+    <input name="username" placeholder="username">
+    <input name="password" placeholder="password">
+    <input type="submit">
+</form>
+
 <!--<form th:action="@{/saveContact}" method="post">-->
     <!--<input type="" name="name" placeholder="name">-->
     <!--<input type="" name="email" placeholder="email">-->
-    <!--<input type="" name="phoneList" placeholder="phoneList">-->
     <!--<input type="submit">-->
 <!--</form>-->
 
 
-<form th:action="@{/saveContact}" method="post" th:object="${contact}" enctype="multipart/form-data">
-    <input type="text" th:field="*{name}" placeholder="name">
-    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</p>
-    <input type="email" th:field="*{email}" placeholder="email">
-    <input type="text" th:field="*{phoneList}" placeholder="phoneList">
-    <input type="file" name="picture">
-    <input type="submit">
-</form>
+<!--<form th:action="@{/saveContact}" method="post" th:object="${contact}" enctype="multipart/form-data">-->
+    <!--<input type="text" th:field="*{name}" placeholder="name">-->
+    <!--<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</p>-->
+    <!--<input type="email" th:field="*{email}" placeholder="email">-->
+    <!--<input type="text" th:field="*{phoneList}" placeholder="phoneList">-->
+    <!--<input type="file" name="picture">-->
+    <!--<input type="submit">-->
+<!--</form>-->
 
-<ul>
-    <li th:each="contact : ${contacts}">
-        <div>
-            <img th:src="@{'/ava/'+${contact.avatar}}">
-        </div>
-        <a th:href="@{'details-' + ${contact.id}}" th:text="'deteil of contacts ' + ${contact.id}"></a>
-    </li>
-</ul>
+<!--<ul>-->
+    <!--<li th:each="contact : ${contacts}">-->
+        <!--<div>-->
+            <!--<img th:src="@{'/ava/'+${contact.avatar}}">-->
+        <!--</div>-->
+        <!--<a th:href="@{'details-' + ${contact.id}}" th:text="'deteil of contacts ' + ${contact.id}"></a>-->
+    <!--</li>-->
+<!--</ul>-->
 </body>
 </html>
